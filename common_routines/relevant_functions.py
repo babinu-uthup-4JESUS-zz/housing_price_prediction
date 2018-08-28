@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import make_pipeline
@@ -50,7 +51,18 @@ def print_model_stats_from_pipeline(pipeline_obj,
         print("Intercept of the model is {0}".format(clf_model.intercept_))  
     if print_coef:
         print("Lasso model coefficients are {0}".format(clf_model.coef_))    
-    print("Number of predictors in the model is {0}".format(np.sum(clf_model.coef_ != 0)))    
-    
+    print("Number of predictors in the model is {0}".format(np.sum(clf_model.coef_ != 0)))  
 
+# Goes over the input date and drop columns which have too many null(around 20%
+# ). Also checks if some data transformations could help here.
+def get_validated_transformed_data(input_csv_file):
+    complete_train_data = pd.read_csv(input_csv_file)
+    null_vals_per_col = list(complete_train_data.isnull().values.sum(axis=0))
+    col_names = list(complete_train_data.columns)
+    cols_to_num_null_vals = dict(zip(col_names, null_vals_per_col))
+    cols_with_many_null_entries = \
+       [col for col in cols_to_num_null_vals.keys() if cols_to_num_null_vals.get(col) > 250]
+    complete_train_data.drop(cols_with_many_null_entries, inplace=True, axis=1)
+    complete_train_data['LogLotArea'] = complete_train_data['LotArea'].apply(lambda x : np.log(x))
+    return complete_train_data
 
