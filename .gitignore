@@ -4,3 +4,4 @@ lasso_techniques/test_module.py
 *.pyc
 lasso_techniques/.ipynb_checkpoints/lasso_variants-checkpoint.ipynb
 lasso_techniques/.Rhistory
+pca_techniques/.ipynb_checkpoints/pca_analysis-checkpoint.ipynb
