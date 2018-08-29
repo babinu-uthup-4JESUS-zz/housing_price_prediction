@@ -66,3 +66,14 @@ def get_validated_transformed_data(input_csv_file):
     complete_train_data['LogLotArea'] = complete_train_data['LotArea'].apply(lambda x : np.log(x))
     return complete_train_data
 
+def get_null_value_details(given_df):
+    num_null_vals = given_df.isnull().values.sum()
+    print("Total number of null values in training data is {0} ".format(num_null_vals))    
+    null_vals_per_col = list(given_df.isnull().values.sum(axis=0))
+    col_names = list(given_df.columns)
+    cols_to_num_null_vals = dict(zip(col_names, null_vals_per_col))
+    print("\nNULL VALUES FOR EACH COLUMN")
+    for col,num_null_val in cols_to_num_null_vals.items():
+        if num_null_val != 0:
+            print(col, num_null_val)
+
