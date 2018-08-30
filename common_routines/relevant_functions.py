@@ -34,7 +34,7 @@ def fit_pipeline_and_cross_validate(my_pipeline,
 		   		    X_columns, 
 				    Y_column='SalePrice'):
     X = train_data[X_columns]
-    Y = train_data[[Y_column]]
+    Y = train_data[[Y_column]].values.ravel()
     my_pipeline.fit(X, Y)
 
 
@@ -76,4 +76,5 @@ def get_null_value_details(given_df):
     for col,num_null_val in cols_to_num_null_vals.items():
         if num_null_val != 0:
             print(col, num_null_val)
+
 
