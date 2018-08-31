@@ -62,6 +62,9 @@ def get_validated_transformed_data(input_csv_file):
     cols_to_num_null_vals = dict(zip(col_names, null_vals_per_col))
     cols_with_many_null_entries = \
        [col for col in cols_to_num_null_vals.keys() if cols_to_num_null_vals.get(col) > 250]
+        
+    # Also, make sure that we drop column Id as well, since it does not give us any predictive value.
+    cols_with_many_null_entries.append('Id')
     complete_train_data.drop(cols_with_many_null_entries, inplace=True, axis=1)
     complete_train_data['LogLotArea'] = complete_train_data['LotArea'].apply(lambda x : np.log(x))
     return complete_train_data
@@ -76,5 +79,3 @@ def get_null_value_details(given_df):
     for col,num_null_val in cols_to_num_null_vals.items():
         if num_null_val != 0:
             print(col, num_null_val)
-
-
