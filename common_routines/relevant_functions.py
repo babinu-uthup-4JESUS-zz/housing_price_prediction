@@ -5,6 +5,9 @@ from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import Imputer
 from sklearn import linear_model
+import matplotlib.pyplot as plt
+FIGURE_LENGTH = 16
+FIGURE_BREADTH = 9
 
 def add(a, b):
     return (np.abs(a) + b)
@@ -79,3 +82,31 @@ def get_null_value_details(given_df):
     for col,num_null_val in cols_to_num_null_vals.items():
         if num_null_val != 0:
             print(col, num_null_val)
+
+def get_cross_validation_score(pipeline_obj, 
+                               train_data_one_hot, 
+                               predictor_cols):
+    (my_pipe, cross_validation_score) = fit_pipeline_and_cross_validate(
+        pipeline_obj, train_data_one_hot, predictor_cols)
+    return cross_validation_score
+
+def plot_relevant_df(predictor_index_cross_val_score_df, 
+                    title='Cross Validation score vs Predictor column index',
+                    fig_length=FIGURE_LENGTH,
+                    fig_breadth=FIGURE_BREADTH):
+    fig, ax = plt.subplots(1, 1, figsize=(fig_length, fig_breadth))
+    predictor_index_cross_val_score_df.plot(ax=ax)
+    ax.set_title(title)
+    return ax
+
+def get_predictor_df(index_name, 
+                     compute_func,
+                     index_start,
+                     predictor_cols):
+    NUM_POINTS = len(predictor_cols)
+    predictor_index_cross_val_score_df = pd.DataFrame(np.arange(index_start,NUM_POINTS + index_start), columns=[index_name])
+    predictor_index_cross_val_score_df['cross_val_score'] = \
+        predictor_index_cross_val_score_df[index_name].apply(lambda x : compute_func(x))
+    predictor_index_cross_val_score_df.index = predictor_index_cross_val_score_df[index_name]
+    predictor_index_cross_val_score_df.drop(columns=[index_name], inplace=True)
+    return predictor_index_cross_val_score_df

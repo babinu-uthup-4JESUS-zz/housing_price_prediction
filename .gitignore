@@ -11,3 +11,5 @@ lasso_techniques/x_train_data_r.csv
 lasso_techniques/x_test_data_r.csv
 xgboost_techniques/.ipynb_checkpoints/xgboost_analysis-checkpoint.ipynb
 
+*.py~
+lasso_techniques/x_test_data_r.csv
