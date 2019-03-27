@@ -13,3 +13,9 @@ xgboost_techniques/.ipynb_checkpoints/xgboost_analysis-checkpoint.ipynb
 
 *.py~
 lasso_techniques/x_test_data_r.csv
+.ipynb_checkpoints/analyze_data-checkpoint.ipynb
+.ipynb_checkpoints/continuation_lin_reg_models-checkpoint.ipynb
+.ipynb_checkpoints/lasso_after_data_transformations-checkpoint.ipynb
+.ipynb_checkpoints/simple_linear_reg_models-checkpoint.ipynb
+.ipynb_checkpoints/Untitled-checkpoint.ipynb
+lasso_techniques/.ipynb_checkpoints/analyze_data-checkpoint.ipynb
